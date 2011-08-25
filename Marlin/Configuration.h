@@ -28,7 +28,9 @@
 
 //// Calibration variables
 // X, Y, Z, E steps per unit - Metric Mendel / Orca with V9 extruder:
-float axis_steps_per_unit[] = {79.87220447, 79.87220447,  200*8/3., 14}; 
+//float axis_steps_per_unit[] = {79.87220447, 79.87220447,  200*8/3., 608}; 
+float axis_steps_per_unit[] = {39.936, 39.936,  200*8/3.0, 310}; 
+
 // For E steps per unit = 67 for v9 with direct drive (needs finetuning) for other extruders this needs to be changed 
 // Metric Prusa Mendel with Makergear geared stepper extruder:
 //float axis_steps_per_unit[] = {80,80,3200/1.25,1380}; 
@@ -59,7 +61,7 @@ const bool ENDSTOPS_INVERTING = true; // set to true to invert the logic of the 
 // Disables axis when it's not being used.
 #define DISABLE_X false
 #define DISABLE_Y false
-#define DISABLE_Z true
+#define DISABLE_Z false
 #define DISABLE_E false
 
 // Inverting axis direction
@@ -82,13 +84,13 @@ const bool ENDSTOPS_INVERTING = true; // set to true to invert the logic of the 
 
 //// MOVEMENT SETTINGS
 #define NUM_AXIS 4 // The axis order in all axis related arrays is X, Y, Z, E
-float max_feedrate[] = {60000, 60000, 500, 500000}; // set the max speeds
+float max_feedrate[] = {60000, 60000, 500, 60000}; // set the max speeds
 float homing_feedrate[] = {2400, 2400, 200, 0};  // set the homing speeds
 bool axis_relative_modes[] = {false, false, false, false};
 
 //// Acceleration settings
 // X, Y, Z, E maximum start speed for accelerated moves. E default values are good for skeinforge 40+, for older versions raise them a lot.
-float acceleration = 3000;         // Normal acceleration mm/s^2
+float acceleration = 4000;         // Normal acceleration mm/s^2
 float retract_acceleration = 7000; // Normal acceleration mm/s^2
 float max_jerk = 20*60;
 long max_acceleration_units_per_sq_second[] = {7000,7000,200,10000}; // X, Y, Z and E max acceleration in mm/s^2 for printing moves or retracts
@@ -131,7 +133,7 @@ double Kd = 80/PID_dT;
 // hooke's law says:		force = k * distance
 // bernoulli's priniciple says:	v ^ 2 / 2 + g . h + pressure / density = constant
 // so: v ^ 2 is proportional to number of steps we advance the extruder
-//#define ADVANCE
+#define ADVANCE
 
 #ifdef ADVANCE
 #define EXTRUDER_ADVANCE_K 0.02

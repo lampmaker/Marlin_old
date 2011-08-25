@@ -127,7 +127,7 @@ char serial_char;
 int serial_count = 0;
 boolean comment_mode = false;
 char *strchr_pointer; // just a pointer to find chars in the cmd string like X, Y, Z, E, etc
-
+float extradvance= EXTRUDER_ADVANCE_K;
 // Manage heater variables.
 
 int target_bed_raw = 0;
@@ -940,6 +940,10 @@ inline void process_commands()
         if(code_seen(axis_codes[i])) axis_travel_steps_per_sqr_second[i] = code_value() * axis_steps_per_unit[i];
       }
       break;
+     case 203: // M202
+        if (code_seen('S')) extradvance=code_value);
+      break;
+      
 #endif
 #ifdef PIDTEMP
     case 301: // M301
@@ -1829,7 +1833,7 @@ void plan_buffer_line(float x, float y, float z, float e, float feed_rate) {
   }
   else {
     long acc_dist = estimate_acceleration_distance(0, block->nominal_rate, block->acceleration);
-    float advance = (STEPS_PER_CUBIC_MM_E * EXTRUDER_ADVANCE_K) * 
+    float advance = (STEPS_PER_CUBIC_MM_E * extradvance) * 
       (block->speed_e * block->speed_e * EXTRUTION_AREA * EXTRUTION_AREA / 3600.0)*65536;
     block->advance = advance;
     if(acc_dist == 0) {
@@ -2052,7 +2056,8 @@ ISR(TIMER1_COMPA_vect)
 
   busy = true;
   sei(); // Re enable interrupts (normally disabled while inside an interrupt handler)
-
+  
+  
   // If there is no current block, attempt to pop one from the buffer
   if (current_block == NULL) {
     // Anything in the buffer?
