@@ -1,3 +1,15 @@
+##
+## NOTE:  Use bkubicek's fork instead!! 
+##
+## I'm mainly using this version to toy around and learn Github....
+##
+
+
+
+
+
+
+
 This firmware is a mashup between Sprinter, grbl and many original parts.
  (https://github.com/kliment/Sprinter)
  (https://github.com/simen/grbl/tree)
